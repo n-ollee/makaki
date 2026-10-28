@@ -88,12 +88,34 @@ footer{padding:36px 0 60px;border-top:1px solid var(--line);color:var(--muted);f
 #consent button{font:700 .95rem var(--head);border-radius:99px;padding:8px 18px;cursor:pointer;border:2px solid var(--bg);background:transparent;color:var(--bg)}
 #consent button.y{background:var(--bg);color:var(--ink)}
 .linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--accent);text-decoration:underline;cursor:pointer}
+nav{flex-wrap:wrap}.brand{font-family:var(--head);font-weight:800;color:var(--ink);text-decoration:none}
+.navl{display:flex;gap:16px;flex-wrap:wrap}.navl a[aria-current=page]{border-bottom:3px solid var(--accent)}
+.page[hidden]{display:none}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:22px}
+.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;text-decoration:none;color:var(--ink)}
+.card:hover{border-color:var(--accent)}.card b{font:800 1.2rem var(--head);display:block}.card span{color:var(--muted);font-size:.95rem;line-height:1.45;display:block;margin-top:4px}
+.pg{padding:30px 0 10px}.pg h1{font-size:clamp(2.2rem,6vw,4rem);font-weight:800;letter-spacing:-.03em}
+.mapbox{background:var(--panel);border:1px solid var(--line);border-radius:22px;overflow:hidden}.mapbox svg{display:block;width:100%;height:auto}
+.kid{background:color-mix(in srgb,var(--steam) 25%,var(--panel));border-radius:16px;padding:14px 18px;margin:22px 0;font-size:1rem;max-width:44em}
+.big{font:800 clamp(4rem,14vw,7rem)/1 var(--head);color:var(--accent)}
+.brow{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:12px;align-items:center;margin:12px 0;font-size:.98rem}
+.brow .bar{margin:0;height:14px}.brow .bar i{background:var(--accent)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:18px}
+.two h3{font-size:1.2rem;margin-bottom:6px}.two p{margin:0;color:var(--muted);font-size:1rem;line-height:1.55}
+.tl{display:grid;gap:12px;margin-top:22px}
+.tli{display:grid;grid-template-columns:70px 1fr;gap:14px;align-items:center;padding:14px;border-radius:16px;background:var(--panel);border:1px solid var(--line);opacity:.3;transition:opacity .3s}
+.tli.on{opacity:1}.tli .em{font-size:2rem;text-align:center}.tli b{font-family:var(--head)}.tli span{display:block;color:var(--muted);font-size:.95rem}
+.clock{font:800 2.4rem var(--head);margin:14px 0 2px}
+.gg{display:grid;grid-template-columns:repeat(4,minmax(52px,72px));gap:8px;margin:16px 0}
+.gc{aspect-ratio:1;border-radius:12px;border:2px solid var(--line);background:var(--bg);font:800 1.5rem var(--head);color:var(--ink);cursor:pointer}
+.gc[disabled]{opacity:.35;cursor:default}.gc.hid{background:var(--ink);color:var(--ink)}.gc.ok{border-color:#4d7a5c}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <nav><span data-t="brand"></span><div class="right-nav"><a href="#species" data-t="nSp"></a><a href="#quiz" data-t="nQuiz"></a><button class="chip lang" id="lang" type="button"></button></div></nav>
+  <nav><a class="brand" href="#/" data-t="brand"></a><div class="right-nav"><span class="navl" id="navLinks"></span><button class="chip lang" id="lang" type="button"></button></div></nav>
 
+  <div class="page" id="p-home">
   <header class="hero">
     <div>
       <h1 data-t="h1"></h1>
@@ -127,6 +149,8 @@ footer{padding:36px 0 60px;border-top:1px solid var(--line);color:var(--muted);f
     </div>
   </header>
 
+  <section id="explore"><h2 id="exH"></h2><div class="cards" id="cards"></div></section>
+
   <section id="about">
     <h2 data-t="aboutH"></h2>
     <p class="intro" data-t="aboutP"></p>
@@ -152,6 +176,11 @@ footer{padding:36px 0 60px;border-top:1px solid var(--line);color:var(--muted);f
     <h2 data-t="quizH"></h2>
     <div class="quiz" id="quizBox"></div>
   </section>
+  </div>
+  <div class="page" id="p-map" hidden></div>
+  <div class="page" id="p-numbers" hidden></div>
+  <div class="page" id="p-brains" hidden></div>
+  <div class="page" id="p-time" hidden></div>
 
   <footer><span data-t="foot"></span> <a href="https://www.iucnredlist.org" target="_blank" rel="noopener">iucnredlist.org</a>. <button class="linkbtn" id="cookieBtn" type="button" data-t="cookies"></button></footer>
 </div>
@@ -331,6 +360,104 @@ function done(){
   $('re').onclick=()=>{qi=0;score=0;showQ()};
 }
 
+// ---------- Subpages ----------
+const X=(a,b)=>lang==='pl'?b:a;
+const PG=[['home','🐒',['Home','Start'],['',''] ],['map','🗺️',['Map','Mapa'],['Where macaques live','Gdzie żyją makaki']],['numbers','🔢',['Numbers','Liczby'],['How many species and how many animals','Ile gatunków i ile zwierząt']],['brains','🧠',['Brains','Inteligencja'],['Tools, memory and a number game','Narzędzia, pamięć i gra w liczby']],['time','⏳',['History','Historia'],['How long macaques have been around','Od kiedy żyją makaki']]];
+const LAND='M336,375L339,373L340,370L339,368L341,369L344,365L344,362L346,360L348,362L349,364L350,368L350,368L351,374L352,375L336,375ZM725,375L726,373L728,373L728,371L731,372L731,370L733,370L735,369L739,371L742,374L745,374L748,375L747,372L749,368L752,367L751,366L753,363L756,361L759,362L763,361L763,358L759,356L762,356L765,357L768,359L772,360L773,360L776,361L779,360L781,360L782,359L785,362L783,364L782,366L780,367L780,369L779,371L777,374L777,375L778,375L725,375ZM808,375L808,373L808,371L808,368L808,365L809,364L808,362L810,359L811,357L811,355L813,353L814,356L814,359L816,360L816,362L818,364L818,367L818,369L818,369L820,373L823,371L824,373L827,375L827,375L808,375ZM704,351L701,351L695,348L700,347L702,348L704,350ZM722,351L718,352L717,351L718,349L720,346L725,344L725,343L730,342L733,342L735,341L737,342L735,343L730,346L725,347ZM689,340L691,342L694,341L696,344L690,345L686,345L684,345L685,342L688,342ZM715,340L714,343L706,345L700,344L700,342L704,341L707,343L710,342ZM643,334L653,334L654,332L663,335L665,338L672,339L679,342L673,344L667,342L663,342L658,342L653,341L647,339L643,338L641,339L632,337L631,335L627,334L630,329L636,330L640,332L642,332ZM774,331L771,334L771,331L771,329L772,327L774,329ZM850,332L849,332L844,330L842,329L842,327L846,328L849,328L850,325L850,325L850,332ZM736,317L734,319L731,318L730,316L735,316ZM752,315L754,319L750,317L746,317L743,317L740,317L741,314L747,314ZM850,349L849,349L850,350L850,353L850,353L849,352L845,351L840,351L836,347L833,345L830,340L824,338L819,340L816,341L817,345L813,347L810,346L805,346L801,341L796,340L794,342L788,342L790,338L793,337L792,331L790,327L780,323L776,322L768,318L767,320L765,321L764,319L764,317L760,314L765,312L769,312L768,311L761,311L759,308L755,307L753,305L759,303L762,302L770,304L771,306L771,306L772,314L777,317L781,312L787,309L792,309L796,310L800,312L805,313L814,316L823,319L826,322L829,324L830,327L838,330L839,333L835,334L836,337L840,340L844,346L847,345L846,348L850,348L850,349ZM726,293L722,298L718,299L714,298L705,298L701,299L700,303L705,307L707,305L717,303L716,305L714,305L712,308L708,310L712,316L711,318L716,323L716,327L713,328L711,326L714,322L709,324L707,323L708,321L704,318L705,313L702,315L702,320L702,328L699,328L697,327L698,322L697,317L695,317L694,314L696,311L697,307L699,299L700,297L704,293L708,295L715,296L720,295L725,292ZM743,294L743,299L741,298L740,301L742,304L740,304L738,301L737,295L738,291L740,289L740,292L743,292ZM629,329L624,329L619,325L613,321L611,318L607,314L605,310L601,303L596,299L595,295L593,291L588,288L586,283L582,281L577,275L576,273L580,273L587,274L592,279L596,282L598,284L603,290L608,290L612,293L615,297L619,299L617,304L620,305L622,305L623,309L624,312L628,312L631,315L629,322ZM689,291L695,295L689,296L687,299L688,304L683,307L683,312L681,320L680,318L674,321L672,317L669,317L666,316L660,317L659,315L655,315L651,315L650,308L648,307L645,302L645,298L645,293L648,290L652,292L656,291L657,287L659,286L665,284L669,281L671,277L673,275L677,273L681,269L684,265L686,265L688,268L688,270L692,271L696,273L696,275L692,275L693,278L689,279L687,284L690,289ZM732,258L732,261L733,264L731,269L729,264L727,266L728,270L727,272L721,269L720,266L721,263L718,261L716,263L714,263L710,266L710,264L712,260L715,258L717,257L719,259L723,257L724,255L727,255L727,251L731,254L732,256ZM506,269L502,270L499,266L498,259L501,251L504,254L507,257L509,262L508,268ZM720,249L718,250L717,253L715,255L712,251L713,250L714,249L715,246L717,245L717,249L720,244ZM693,253L686,258L688,255L692,252L695,248L698,243L698,247L695,250ZM709,241L712,242L716,242L716,244L713,246L710,248L710,245L710,243ZM728,239L729,245L725,243L725,245L726,248L724,249L724,246L722,246L722,243L724,243L724,241L721,237L726,237ZM708,235L706,239L704,236L702,233L706,233ZM707,207L710,209L711,208L712,209L711,211L713,215L711,219L708,220L708,224L709,228L711,229L714,228L720,231L719,234L721,235L720,237L716,235L715,232L713,234L710,231L706,232L703,231L703,229L705,227L703,226L703,228L700,225L700,223L699,218L701,220L702,212L704,207ZM652,207L647,209L643,207L643,203L646,201L651,199L654,200L655,202L653,204ZM706,186L704,190L701,186L701,182L703,177L707,174L710,175L709,178ZM773,129L774,131L771,134L769,132L766,134L765,136L762,135L762,133L765,130L767,130L770,128ZM273,122L269,124L270,125L270,125L265,127L262,126L261,124L264,124L264,124L265,123L268,123ZM219,121L221,123L225,123L229,123L229,124L231,123L231,125L224,125L224,125L218,124ZM178,109L176,113L177,114L176,117L172,115L169,114L162,112L163,109L169,110L174,109ZM146,94L149,97L148,104L146,104L144,105L142,104L142,98L141,95L144,96ZM805,114L803,118L804,121L801,124L795,127L786,127L779,133L776,131L775,127L767,128L761,130L755,131L760,134L757,143L753,145L751,143L752,138L749,137L747,134L752,132L754,129L759,126L763,123L773,121L778,122L784,113L787,116L794,111L797,109L800,103L799,97L802,94L807,93L810,100L809,104L805,109ZM148,89L146,93L144,92L143,89L144,87L147,85ZM820,79L823,80L827,78L828,84L820,85L816,90L808,87L805,92L800,92L799,87L802,83L807,83L808,76L810,72L816,77ZM818,46L823,55L816,53L813,61L818,66L818,69L814,66L810,70L810,66L810,61L810,56L811,52L811,45L808,40L808,33L813,31L811,29L813,28L815,31L816,36L816,41ZM66,39L57,42L50,41L54,36L52,31L58,27L62,24L66,24L72,27L69,31L70,34ZM163,22L160,26L155,23L155,21L162,19ZM85,7L80,12L85,12L90,12L89,16L84,20L90,20L94,27L98,28L101,33L102,35L108,36L108,40L105,41L107,44L103,46L96,46L88,48L85,47L82,49L77,48L74,50L71,49L78,44L83,43L75,42L74,40L79,38L76,36L77,33L85,33L85,30L82,27L76,26L75,25L76,22L75,21L72,23L72,19L69,16L71,11L75,7L79,7ZM346,94L348,97L350,97L352,99L348,99L347,103L346,105L344,106L344,108L346,112L351,113L354,116L361,116L369,115L370,114L369,110L369,105L366,104L367,100L363,100L365,96L369,97L374,95L370,92L369,89L365,91L364,94L363,91L362,90L363,88L363,86L357,84L354,80L352,79L352,77L356,77L357,74L361,73L365,74L366,69L365,66L360,66L356,65L350,67L346,68L343,71L338,72L333,77L338,82L337,85L343,91ZM850,2L849,2L843,4L827,3L811,5L795,15L776,26L784,27L786,30L791,31L794,29L800,29L807,35L807,39L803,44L803,50L800,58L793,65L791,68L784,74L778,80L774,83L768,86L765,86L761,84L755,87L754,89L752,89L750,90L748,92L749,96L746,97L745,98L743,99L740,100L738,101L738,103L737,104L739,105L742,107L746,113L747,116L747,122L745,125L741,126L737,128L732,128L732,125L733,122L731,116L734,116L731,111L728,110L728,111L726,112L726,111L725,110L724,109L725,107L726,107L726,106L727,103L727,102L724,102L721,100L714,102L711,104L705,106L708,103L707,101L711,98L708,95L704,97L698,101L695,104L690,104L688,106L690,110L694,111L695,113L699,114L704,111L709,113L712,113L713,115L706,117L703,119L698,122L696,125L701,128L703,133L706,138L710,142L709,145L706,147L708,149L710,151L710,155L708,159L706,159L702,165L698,171L693,177L686,182L679,186L674,187L671,189L669,187L666,190L659,192L654,193L652,198L649,199L648,195L649,193L643,191L640,192L634,197L629,201L628,205L632,210L637,217L641,220L644,224L647,233L646,242L642,245L636,248L632,252L626,257L624,254L625,250L622,248L617,247L615,244L613,239L608,237L604,237L605,233L600,233L600,238L597,246L596,250L596,254L599,254L601,259L602,263L605,266L608,266L611,269L612,269L615,272L617,276L617,279L617,281L617,283L618,286L619,287L621,292L621,294L618,294L613,290L607,286L606,284L603,280L603,276L601,273L602,270L600,268L598,266L598,263L595,260L593,258L592,261L591,258L591,255L593,250L592,247L594,243L592,240L593,234L591,232L589,226L588,219L586,215L583,218L577,221L574,221L571,220L573,214L572,209L568,203L568,201L565,201L562,197L560,194L560,191L559,189L557,186L552,186L553,188L551,191L549,190L549,191L547,190L545,190L544,192L541,191L535,193L535,196L532,199L525,203L520,208L516,212L511,215L511,217L508,218L504,220L502,221L500,224L501,231L501,235L499,240L499,248L497,248L494,252L496,254L491,255L490,259L488,260L483,255L481,249L479,243L477,241L474,236L473,230L472,227L468,220L466,210L464,204L464,198L463,193L456,196L452,196L446,190L448,188L447,186L441,182L437,180L436,177L432,173L423,174L415,174L407,175L398,173L393,172L387,171L385,165L382,164L379,165L374,168L367,166L362,162L358,161L354,156L351,149L348,150L345,148L343,150L340,150L341,152L340,153L342,157L344,162L347,163L347,164L351,167L351,169L351,170L351,172L353,173L353,175L354,176L354,173L355,170L356,169L358,171L358,174L357,177L358,179L359,179L359,180L363,179L367,179L370,179L373,176L377,173L380,170L382,168L382,168L382,171L381,171L382,175L384,179L387,181L391,181L394,182L396,185L397,187L399,187L399,188L397,191L396,193L394,194L392,198L390,198L389,199L388,201L389,205L388,205L386,205L383,207L383,210L381,211L378,211L376,212L376,214L374,215L371,215L368,216L366,217L362,218L361,220L361,222L356,224L348,226L343,230L341,230L340,230L337,232L334,233L329,233L328,234L327,235L326,235L325,237L322,236L321,237L317,237L316,234L316,231L315,230L314,226L313,224L314,224L314,221L314,220L314,218L313,216L312,215L311,213L309,211L306,207L305,203L301,199L299,198L296,194L295,190L295,187L292,182L290,180L287,179L286,176L286,175L285,172L283,171L281,167L278,163L276,160L273,160L274,157L274,155L275,153L275,152L273,155L272,158L271,161L270,162L268,160L266,158L262,151L262,151L264,156L267,162L271,169L272,172L274,175L278,180L277,181L278,184L283,189L284,190L286,195L285,196L286,201L287,207L289,208L292,210L295,216L296,220L299,223L306,228L309,230L311,233L313,235L315,237L317,238L316,240L314,241L316,243L317,244L318,246L321,248L323,248L328,247L333,246L338,244L340,244L342,243L345,243L346,243L349,242L351,242L354,240L356,240L356,241L355,244L355,247L354,249L353,254L350,260L347,266L343,273L339,279L333,286L328,290L320,295L316,299L310,305L309,307L308,308L304,310L303,312L301,313L301,316L299,318L298,322L296,323L294,330L294,332L297,334L297,335L296,339L296,340L296,342L298,346L300,350L302,352L302,354L302,359L303,363L303,371L304,373L303,375L160,375L160,375L161,374L161,372L163,368L164,366L167,362L168,360L169,356L168,354L167,352L166,349L164,346L165,345L166,343L165,338L164,335L161,331L162,330L161,329L160,325L155,320L150,315L147,311L144,306L144,304L145,302L146,299L147,295L147,294L148,289L149,285L147,281L145,280L144,278L142,278L143,276L137,278L135,278L133,279L129,279L127,276L125,272L122,269L118,269L113,269L109,269L105,270L97,273L95,275L90,276L86,275L83,275L80,274L77,274L71,275L67,276L62,278L61,278L60,278L55,276L50,272L46,269L43,266L41,266L38,264L35,261L34,259L34,255L32,253L30,251L28,250L27,249L27,247L26,246L24,245L22,243L20,242L18,241L18,240L17,239L17,238L16,234L16,232L14,228L12,226L14,225L16,222L18,219L17,217L19,214L19,209L19,205L18,202L19,200L17,197L15,195L15,193L15,191L17,189L19,187L18,185L20,181L23,178L25,177L26,174L26,172L28,169L31,167L34,162L37,160L42,159L46,156L48,155L52,150L51,144L53,140L53,137L57,134L62,132L65,129L69,124L70,121L74,121L77,123L82,123L87,124L89,124L94,121L99,121L103,118L107,117L116,116L124,116L127,116L131,114L137,114L139,116L142,115L148,113L151,114L151,116L155,115L156,115L153,118L153,120L155,122L154,126L151,128L152,131L154,131L156,134L157,134L163,136L165,136L170,136L176,139L179,143L183,144L190,146L195,149L198,147L200,145L199,141L201,139L204,136L208,136L214,137L216,139L218,139L220,140L225,140L226,142L232,142L237,143L242,145L245,146L248,144L250,143L255,142L258,143L260,145L261,144L265,145L269,145L271,144L273,142L272,142L274,140L275,136L275,135L276,135L277,130L280,127L280,127L280,123L281,121L279,119L281,117L278,117L274,116L270,119L263,119L259,117L253,117L252,119L248,119L244,117L238,117L235,112L232,109L234,105L231,103L236,98L244,98L246,94L256,95L262,91L268,90L276,90L285,93L292,95L298,94L302,95L308,92L309,90L307,87L304,85L302,84L300,83L293,79L288,77L283,74L287,73L291,69L288,67L296,65L296,64L291,64L287,65L284,67L279,67L275,69L275,72L278,73L283,73L282,74L276,75L269,78L267,77L268,75L262,73L263,72L268,71L266,70L259,68L258,66L254,67L252,70L248,74L248,75L246,76L244,75L243,81L240,84L238,87L240,90L241,92L245,93L244,95L238,95L236,97L232,99L230,97L230,96L227,96L225,95L219,97L222,99L219,100L217,100L214,98L213,99L214,102L217,104L215,105L218,107L220,109L220,112L216,110L217,113L214,113L216,118L212,118L208,116L206,112L206,108L204,106L201,103L201,102L200,102L200,100L197,99L197,96L197,93L198,91L197,91L196,90L194,89L192,88L188,86L185,84L180,82L176,79L177,78L175,76L175,75L171,74L170,76L168,74L168,73L169,73L170,72L166,71L162,73L162,76L161,77L163,80L168,82L170,86L176,90L180,90L181,91L179,92L184,94L188,96L192,98L192,99L191,101L189,99L184,98L182,101L186,103L185,105L183,106L181,110L178,110L178,109L179,106L181,105L179,102L177,100L175,99L174,97L170,96L168,94L164,94L161,91L156,88L153,85L151,80L149,80L144,78L142,79L139,81L137,82L133,84L123,83L116,85L115,88L115,91L110,94L104,95L104,97L101,99L99,103L101,106L98,109L97,112L93,113L89,117L83,117L78,117L75,118L73,120L71,120L69,118L67,115L63,115L61,116L58,115L56,116L56,112L56,109L54,108L52,106L53,103L55,101L55,99L56,96L56,94L55,92L55,91L55,87L53,85L60,81L66,82L73,82L78,83L82,83L90,83L93,80L94,70L89,65L85,62L78,60L77,57L84,55L92,57L90,51L95,53L107,49L108,45L113,44L117,43L119,42L124,35L130,32L135,33L136,32L140,31L141,32L144,30L143,28L143,25L141,22L140,17L141,16L143,14L147,14L149,13L153,11L153,14L151,16L152,17L155,18L153,20L152,19L148,23L150,25L150,27L155,28L155,30L160,29L163,28L168,30L171,31L174,30L182,27L188,26L193,27L193,28L198,28L199,26L206,24L205,20L205,16L208,13L213,11L217,15L221,15L222,11L222,8L220,9L217,7L217,4L223,3L229,2L235,3L240,3L245,0L850,0ZM220,0L214,1L214,0L220,0ZM194,0L189,5L184,6L182,15L179,19L173,19L170,23L165,23L163,18L159,13L155,6L152,3L142,8L135,10L128,7L127,2L126,0L194,0Z';
+const R=[[[138.5,36.5,2.5],[133,34.8,2],[131,32.5,1.8]],[[78,28,5],[88,24,4],[96,23,3],[104,24,4],[68,32.5,3],[113,26,3]],[[101,13,4],[101,4,2.5],[110,-7,2.5],[121,13,2.5],[105,10,2],[115,1,2.5],[100,-1,2]],[[100,16,3],[101,6,2.5],[101,0,2],[114,1,2.5]],[[-5,33,2.5],[3,35.5,2.5],[-5.35,36.1,.8]],[[76.5,10.5,1.6]],[[125,1.3,1.4]],[[103,30,3],[112,27,3],[117,27.5,2]]];
+const pg=(h,lead,body)=>`<div class="pg"><h1>${h}</h1><p class="intro">${lead}</p></div>${body}`;
+let cur='home';
+function renderNav(){
+  $('navLinks').innerHTML=PG.map(p=>`<a href="#/${p[0]==='home'?'':p[0]}" ${p[0]===cur?'aria-current="page"':''}>${L(p[2])}</a>`).join('');
+  $('exH').textContent=X('Explore more','Odkryj więcej');
+  $('cards').innerHTML=PG.slice(1).map(p=>`<a class="card" href="#/${p[0]}"><b>${p[1]} ${L(p[2])}</b><span>${L(p[3])}</span></a>`).join('');
+}
+// Map
+let mapSel=-1;
+function renderMap(){
+  const px=(lo,la)=>[(lo+20)*5,(60-la)*5];
+  const dots=S.map((s,i)=>(mapSel===-1||mapSel===i)?R[i].map(([lo,la,r])=>{const [x,y]=px(lo,la);return `<circle cx="${x}" cy="${y}" r="${Math.max(5,r*5)}" fill="var(--accent)" opacity="${mapSel===-1?.3:.6}" stroke="var(--accent)" stroke-width="1.5"/>`}).join(''):'').join('');
+  const lab=(x,y,tx)=>`<text x="${x}" y="${y}" fill="var(--muted)" font-size="15" font-family="var(--head)" font-weight="700" text-anchor="middle" opacity=".8">${tx}</text>`;
+  const cap=mapSel===-1?X('Tap a species to see where it lives. Red circles show the rough area, not exact borders.','Kliknij gatunek, aby zobaczyć, gdzie żyje. Czerwone koła pokazują przybliżony obszar, a nie dokładne granice.'):`<b>${L(S[mapSel].n)}</b>: ${L(S[mapSel].a)}. ${L(S[mapSel].f)}`;
+  $('p-map').innerHTML=pg(X('Where macaques live','Gdzie żyją makaki'),X('Macaques live across Asia, plus one species in North Africa. No other monkey group except humans lives in so many different places.','Makaki żyją w całej Azji, a jeden gatunek w Afryce Północnej. Żadna inna grupa małp poza ludźmi nie występuje w tak wielu miejscach.'),
+  `<div class="filters" role="group"><button class="chip" aria-pressed="${mapSel===-1}" data-m="-1">${X('All species','Wszystkie')}</button>${S.map((s,i)=>`<button class="chip" aria-pressed="${mapSel===i}" data-m="${i}">${L(s.n)}</button>`).join('')}</div>
+  <div class="mapbox"><svg viewBox="0 0 850 375" role="img" aria-label="${X('Map of Africa and Asia showing where macaques live','Mapa Afryki i Azji pokazująca, gdzie żyją makaki')}"><rect width="850" height="375" fill="color-mix(in srgb,var(--steam) 30%,var(--bg))"/><path d="${LAND}" fill="var(--panel)" stroke="var(--line)" stroke-width="1"/>${lab(200,285,X('AFRICA','AFRYKA'))}${lab(175,60,X('EUROPE','EUROPA'))}${lab(560,80,X('ASIA','AZJA'))}${lab(600,330,X('Indian Ocean','Ocean Indyjski'))}${dots}</svg></div>
+  <p id="mCap" aria-live="polite" style="max-width:48em">${cap}</p>
+  <div class="kid">🧒 ${X('<b>For kids:</b> Most macaques live in warm forests, but Japanese macaques live where it snows. The Barbary macaque is the only one that lives in Africa, and a small group lives on the Rock of Gibraltar in Europe.','<b>Dla dzieci:</b> Większość makaków mieszka w ciepłych lasach, ale makaki japońskie żyją tam, gdzie pada śnieg. Makak magot jako jedyny mieszka w Afryce, a mała grupa żyje na Skale Gibraltarskiej w Europie.')}</div>`);
+  $('p-map').querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{mapSel=+b.dataset.m;if(mapSel>=0)ev('map_species',{species:S[mapSel].n[0]});renderMap()});
+}
+// Numbers
+function renderNumbers(){
+  const pop=[[['Japanese macaque','Makak japoński'],100000,X('100,000 or more','100 tys. lub więcej')],[['Barbary macaque','Makak magot'],8000,X('fewer than 10,000','poniżej 10 tys.')],[['Lion-tailed macaque','Makak wanderu'],3500,X('about 3,000–4,000','około 3–4 tys.')]];
+  $('p-numbers').innerHTML=pg(X('Numbers','Liczby'),X('How many kinds of macaque are there, and how many animals?','Ile jest rodzajów makaków i ile jest zwierząt?'),
+  `<section><div class="big">≈ 23</div><h2>${X('species of macaque','gatunków makaków')}</h2>
+  <p class="intro">${X('Scientists do not all agree on the exact number. Some counts say 22, others 25, because new species are still being described and some are split or merged. Almost all live in Asia.','Naukowcy nie są zgodni co do dokładnej liczby. Jedne źródła podają 22, inne 25, ponieważ wciąż opisuje się nowe gatunki, a niektóre dzieli się lub łączy. Prawie wszystkie żyją w Azji.')}</p>
+  <div class="kid">🧒 ${X('<b>Island of macaques:</b> Sulawesi, one island in Indonesia, is home to seven macaque species that live nowhere else on Earth.','<b>Wyspa makaków:</b> Na Celebes, jednej wyspie w Indonezji, żyje siedem gatunków makaków, których nie ma nigdzie indziej na świecie.')}</div></section>
+  <section><h2>${X('How many animals?','Ile jest zwierząt?')}</h2>
+  <p class="intro">${X('Some macaques are very common, others are rare. These are rough estimates and sources differ. The bars are drawn to the same scale.','Niektóre makaki są bardzo pospolite, inne rzadkie. To przybliżone szacunki, a źródła się różnią. Słupki narysowano w tej samej skali.')}</p>
+  ${pop.map(p=>`<div class="brow"><span><b>${L(p[0])}</b><br>${p[2]}</span><div class="bar"><i style="width:${Math.max(1.5,p[1]/1000)}%"></i></div></div>`).join('')}
+  <div class="two"><div><h3>${X('Very common','Bardzo pospolite')}</h3><p>${X('Rhesus and long-tailed macaques live in huge numbers across Asia and thrive near people. Even so, long-tailed macaques are now listed as Endangered because their numbers are falling.','Makaki rezus i jawajskie występują w ogromnej liczbie w całej Azji i dobrze radzą sobie blisko ludzi. Mimo to makaki jawajskie są dziś uznane za zagrożone, bo ich liczba spada.')}</p></div>
+  <div><h3>${X('Rare and shrinking','Rzadkie i coraz mniej licznie')}</h3><p>${X('Crested black macaques lost about four fifths of their population over a few decades, mostly to hunting and forest loss. Lion-tailed and Barbary macaques are Endangered too.','Makaki czubate straciły około czterech piątych populacji w ciągu kilku dekad, głównie przez polowania i wycinkę lasów. Makaki wanderu i magoty także są zagrożone.')}</p></div>
+  <div><h3>${X('How we can help','Jak możemy pomóc')}</h3><p>${X('Protecting forests helps most. If you meet wild monkeys, watch from a distance and never feed them. Human food makes them sick and less afraid of people.','Najwięcej daje ochrona lasów. Jeśli spotkasz dzikie małpy, obserwuj je z daleka i nigdy ich nie karm. Ludzkie jedzenie je rozchorowuje i odzwyczaja od strachu przed ludźmi.')}</p></div></div></section>`);
+}
+// Brains + game
+let gN=3,gNext=1,gCells=[];
+function gStart(){
+  gNext=1;const pos=[...Array(16).keys()].sort(()=>Math.random()-.5).slice(0,gN);
+  gCells=Array(16).fill(0);pos.forEach((c,i)=>gCells[c]=i+1);
+  gDraw('show',X('Click 1 first. Then the other numbers hide, so click them in order from memory.','Kliknij najpierw 1. Potem pozostałe liczby znikną, więc klikaj je po kolei z pamięci.'));
+}
+function gDraw(st,msg){
+  $('gGrid').innerHTML=gCells.map((v,i)=>!v?`<span></span>`:`<button class="gc ${st==='hide'&&v>=gNext?'hid':''} ${v<gNext?'ok':''}" data-v="${v}" ${(st==='over'||v<gNext)?'disabled':''}>${st==='hide'&&v>=gNext?'':(v<gNext&&st==='hide'?'✓':v)}</button>`).join('');
+  $('gMsg').textContent=msg;$('gNext').hidden=st!=='won';
+  $('gGrid').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const v=+b.dataset.v;
+    if(v!==gNext){gDraw('over',X('Oops, that was not the next number. Try this round again.','Ups, to nie była następna liczba. Spróbuj tej rundy jeszcze raz.'));$('gNext').hidden=false;$('gNext').textContent=X('Try again','Spróbuj ponownie');gMode='again';return}
+    gNext++;
+    if(gNext>gN){gDraw('won',X('Perfect! You remembered all '+gN+' positions.','Świetnie! Zapamiętano wszystkie pozycje ('+gN+').'));$('gNext').hidden=false;$('gNext').textContent=gN<9?X('Next round','Następna runda'):X('Play again','Zagraj ponownie');gMode='next';ev('brain_game_round',{numbers:gN});return}
+    gDraw('hide',X('Keep going: which number is next?','Dalej: która liczba jest następna?'));
+  });
+}
+let gMode='next';
+function renderBrains(){
+  $('p-brains').innerHTML=pg(X('Clever monkeys','Mądre małpy'),X('Macaques solve problems, learn from each other and remember a lot about their troop.','Makaki rozwiązują problemy, uczą się od siebie i pamiętają wiele o swoim stadzie.'),
+  `<section><div class="two">
+  <div><h3>🪨 ${X('Tool use','Używanie narzędzi')}</h3><p>${X('Long-tailed macaques in Thailand use stones to crack open shellfish, nuts and oysters, and young monkeys learn the trick by watching.','Makaki jawajskie w Tajlandii rozbijają kamieniami muszle, orzechy i ostrygi, a młode uczą się tej sztuczki, patrząc na starsze.')}</p></div>
+  <div><h3>🍠 ${X('Learning culture','Uczenie się kultury')}</h3><p>${X('In the 1950s, a young Japanese macaque on Koshima island began washing sweet potatoes in water. Others copied her, and the habit spread through the troop.','W latach 50. młody makak japoński na wyspie Koshima zaczął myć bataty w wodzie. Inne go naśladowały i zwyczaj rozprzestrzenił się w stadzie.')}</p></div>
+  <div><h3>🔢 ${X('Numbers and order','Liczby i kolejność')}</h3><p>${X('In lab studies, rhesus macaques learn to put symbols and numbers in the right order, and they can tell when they are unsure of an answer.','W badaniach laboratoryjnych makaki rezus uczą się układać symbole i liczby we właściwej kolejności i potrafią poznać, że nie są pewne odpowiedzi.')}</p></div>
+  <div><h3>👥 ${X('Social smarts','Inteligencja społeczna')}</h3><p>${X('Troops have ranks, friendships and alliances. Macaques recognise many individuals and use grooming to make friends and keep the peace.','Stada mają hierarchię, przyjaźnie i sojusze. Makaki rozpoznają wiele osobników, a iskaniem zawierają przyjaźnie i utrzymują pokój.')}</p></div></div>
+  <div class="kid">🧠 ${X('A macaque brain weighs about 90 grams. A human brain is around 15 times heavier, at roughly 1,350 grams.','Mózg makaka waży około 90 gramów. Ludzki mózg jest około 15 razy cięższy, czyli waży mniej więcej 1350 gramów.')}</div></section>
+  <section><h2>${X('Memory game','Gra pamięciowa')}</h2><p class="intro">${X('Scientists use number games like this to study memory in primates. Can you do it?','Naukowcy używają takich gier z liczbami do badania pamięci naczelnych. Dasz radę?')}</p>
+  <div class="gg" id="gGrid"></div><p id="gMsg" aria-live="polite"></p><button class="btn" id="gNext" hidden></button></section>`);
+  $('gNext').onclick=()=>{if(gMode==='next')gN=gN<9?gN+1:3;gStart()};
+  gStart();
+}
+// Time
+function renderTime(){
+  const E=[[0,'🐒🦍',X('Old World monkeys and apes split','Małpy wąskonose i człekokształtne rozchodzą się'),X('about 30 million years ago','około 30 mln lat temu')],[80,'🌍',X('The first macaques appear','Pojawiają się pierwsze makaki'),X('about 5–6 million years ago, in North Africa','około 5–6 mln lat temu, w Afryce Północnej')],[99,'🧑',X('Our species, Homo sapiens, appears','Pojawia się nasz gatunek, Homo sapiens'),X('about 300,000 years ago','około 300 tys. lat temu')],[100,'🌏',X('Today','Dziś'),X('about 23 macaque species','około 23 gatunków makaków')]];
+  $('p-time').innerHTML=pg(X('How long have macaques lived?','Od kiedy żyją makaki?'),X('The macaque family goes back about 5–6 million years, around 20 times longer than our own species. Fossils show they once lived in Europe too.','Rodzaj makaków sięga około 5–6 milionów lat wstecz, czyli około 20 razy dalej niż nasz gatunek. Skamieniałości pokazują, że kiedyś żyły też w Europie.'),
+  `<section><label for="tSl"><b>${X('Travel through time','Podróż w czasie')}</b></label><input id="tSl" type="range" min="0" max="100" value="0" style="width:100%;accent-color:var(--accent)">
+  <div class="clock" id="tClock"></div><p id="tAgo" style="margin:0;color:var(--muted)"></p>
+  <div class="tl" id="tl">${E.map((e,i)=>`<div class="tli" data-v="${e[0]}"><div class="em" aria-hidden="true">${e[1]}</div><div><b>${e[2]}</b><span>${e[3]}</span></div></div>`).join('')}</div>
+  <div class="kid">🧒 ${X('<b>Imagine all of this as one day.</b> Old World monkeys and apes split at midnight. Macaques show up at about 7 p.m. Humans arrive at about 11:45 p.m., just 15 minutes before the day ends.','<b>Wyobraź sobie to jako jedną dobę.</b> O północy małpy wąskonose i człekokształtne się rozchodzą. Makaki pojawiają się około 19:00. Ludzie przychodzą około 23:45, zaledwie 15 minut przed końcem doby.')}</div></section>`);
+  const sl=$('tSl');let sent=false;
+  const up=()=>{const v=+sl.value,m=Math.round(v/100*1440);
+    $('tClock').textContent=String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
+    const ago=30*(1-v/100);$('tAgo').textContent=ago<0.05?X('Today','Dziś'):X(ago>=1?ago.toFixed(1)+' million years ago':Math.round(ago*1000)+',000 years ago',ago>=1?ago.toFixed(1)+' mln lat temu':Math.round(ago*1000)+' tys. lat temu');
+    $('tl').querySelectorAll('.tli').forEach(e=>e.classList.toggle('on',v>=+e.dataset.v))};
+  sl.oninput=up;sl.onchange=()=>{if(!sent){sent=true;ev('timeline_slider')}};up();
+}
+function renderPages(){renderNav();renderMap();renderNumbers();renderBrains();renderTime()}
+function route(){
+  const h=location.hash,m=h.match(/^#\/(\w*)/);
+  let p=m&&PG.some(x=>x[0]===m[1])?m[1]:'home';
+  document.querySelectorAll('.page').forEach(e=>e.hidden=e.id!=='p-'+p);
+  const changed=p!==cur;cur=p;renderNav();
+  if(m)window.scrollTo(0,0);else if(h.length>1){const el=document.getElementById(h.slice(1));if(el)el.scrollIntoView()}
+  if(changed)ev('subpage_view',{page:p});
+}
+window.addEventListener('hashchange',route);
+
 // ---------- Language ----------
 function applyLang(){
   document.documentElement.lang=lang;document.title=t('title');
@@ -339,10 +466,11 @@ function applyLang(){
   $('lang').textContent=lang==='pl'?'EN':'PL';
   $('lang').setAttribute('aria-label',lang==='pl'?'Switch to English':'Przełącz na polski');
   update();renderFilters();renderList();renderDetail();
+  renderPages();
   finished?done():showQ();
 }
 $('lang').onclick=()=>{lang=lang==='pl'?'en':'pl';store.set('lang',lang);ev('language_change',{language:lang});applyLang()};
-applyLang();
+applyLang();route();
 </script>
 </body>
 </html>
