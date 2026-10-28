@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Macaques – a field guide</title>
+<meta name="description" content="Explore the macaques: 23 species of monkeys from Japan to Gibraltar.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐒</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9eeea; --panel:#f6f8f6; --ink:#232b26; --muted:#5a665e; --line:#c5cfc8;
+  --fur:#9a8776; --fur-dark:#6e5e50; --face:#d4574a; --face-cold:#e7b7ae; --steam:#8fb7c4; --accent:#b8402f;
+  --head:'Bricolage Grotesque',system-ui,sans-serif; --body:'Source Serif 4',Georgia,serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#171d19;--panel:#202823;--ink:#e8eee9;--muted:#9fada4;--line:#34403a;--accent:#ec7c6a;--face-cold:#b98a82}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.65 var(--body)}
+h1,h2,h3{font-family:var(--head);line-height:1.05;margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+nav{display:flex;gap:22px;justify-content:space-between;align-items:center;padding:18px 0;font-family:var(--head);font-weight:700}
+nav div{display:flex;gap:20px}
+nav a{color:var(--ink);text-decoration:none}
+nav a:hover{color:var(--accent)}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding:30px 0 70px}
+.hero h1{font-size:clamp(2.8rem,7vw,5.2rem);font-weight:800;letter-spacing:-.03em}
+.hero p.lead{font-size:1.2rem;max-width:34em;color:var(--muted)}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:22px;position:relative;overflow:hidden}
+.stage svg{width:100%;height:auto;display:block}
+.ctrl{margin-top:8px}
+.ctrl label{font-family:var(--head);font-weight:700;display:flex;justify-content:space-between}
+input[type=range]{width:100%;accent-color:var(--accent)}
+#tempNote{margin:6px 0 0;font-size:.95rem;color:var(--muted);min-height:3.4em}
+.steam{animation:rise 4s ease-in infinite;opacity:0}
+.steam:nth-of-type(2){animation-delay:1.3s}.steam:nth-of-type(3){animation-delay:2.4s}
+@keyframes rise{0%{opacity:0;transform:translateY(10px)}30%{opacity:.7}100%{opacity:0;transform:translateY(-26px)}}
+section{padding:60px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(2rem,4.5vw,3rem);font-weight:800;margin-bottom:14px;letter-spacing:-.02em}
+.intro{max-width:40em;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-top:28px}
+.fact{padding:18px 0;border-top:3px solid var(--fur)}
+.fact b{font-family:var(--head);font-size:1.15rem;display:block;margin-bottom:4px}
+.fact span{color:var(--muted);font-size:.98rem;display:block;line-height:1.5}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}
+.chip{font:700 .95rem var(--head);border:2px solid var(--ink);background:transparent;color:var(--ink);padding:7px 15px;border-radius:99px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.explorer{display:grid;grid-template-columns:260px 1fr;gap:26px}
+.list{display:flex;flex-direction:column;gap:6px}
+.sp{font:600 1rem var(--head);text-align:left;padding:11px 14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:12px;cursor:pointer;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.sp[aria-selected=true]{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
+.sp small{font-weight:500;color:var(--muted)}
+.sp[hidden]{display:none}
+.detail{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:28px}
+.detail h3{font-size:2rem;font-weight:800}
+.detail em{color:var(--muted)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:20px 0}
+.meta div{font-size:.95rem;line-height:1.4}
+.meta b{display:block;font-family:var(--head)}
+.status{display:inline-block;padding:2px 12px;border-radius:99px;font:700 .9rem var(--head);color:#fff}
+.s-lc{background:#4d7a5c}.s-nt{background:#8a8a3a}.s-vu{background:#b27a22}.s-en{background:#c0502d}.s-cr{background:#9b2330}
+.bar{height:10px;background:var(--line);border-radius:6px;margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--fur-dark);transition:width .5s}
+.quiz{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:28px;max-width:720px}
+.quiz h3{font-size:1.5rem;margin:6px 0 16px}
+.opts{display:grid;gap:10px}
+.opt{font:500 1.05rem var(--body);text-align:left;padding:12px 16px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{border-color:#4d7a5c;background:color-mix(in srgb,#4d7a5c 22%,var(--bg))}
+.opt.wrong{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 18%,var(--bg))}
+.why{margin-top:14px;color:var(--muted);min-height:3em}
+.btn{font:700 1rem var(--head);background:var(--ink);color:var(--bg);border:0;padding:11px 22px;border-radius:99px;cursor:pointer;margin-top:10px}
+.prog{font:700 .95rem var(--head);color:var(--muted)}
+footer{padding:36px 0 60px;border-top:1px solid var(--line);color:var(--muted);font-size:.95rem}
+@media(max-width:800px){.hero,.explorer{grid-template-columns:1fr}.list{flex-direction:row;flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.steam{animation:none;opacity:.4}html{scroll-behavior:auto}}
+
+.right-nav{display:flex;gap:18px;align-items:center}
+.lang{padding:4px 12px}
+#consent{position:fixed;left:14px;right:14px;bottom:14px;max-width:560px;background:var(--ink);color:var(--bg);border-radius:18px;padding:16px 18px;font:500 .95rem/1.5 var(--head);z-index:9;display:none;gap:12px;flex-direction:column;box-shadow:0 8px 30px #0004}
+#consent .row{display:flex;gap:10px}
+#consent button{font:700 .95rem var(--head);border-radius:99px;padding:8px 18px;cursor:pointer;border:2px solid var(--bg);background:transparent;color:var(--bg)}
+#consent button.y{background:var(--bg);color:var(--ink)}
+.linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--accent);text-decoration:underline;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><span data-t="brand"></span><div class="right-nav"><a href="#species" data-t="nSp"></a><a href="#quiz" data-t="nQuiz"></a><button class="chip lang" id="lang" type="button"></button></div></nav>
+
+  <header class="hero">
+    <div>
+      <h1 data-t="h1"></h1>
+      <p class="lead" data-t="lead"></p>
+    </div>
+    <div class="stage">
+      <svg id="heroSvg" viewBox="0 0 400 320" role="img">
+        <rect width="400" height="320" rx="20" fill="var(--steam)" opacity=".18"/>
+        <g id="snow" fill="#fff"></g>
+        <g class="steam" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M90 230c-10-14 10-22 0-38"/></g>
+        <g class="steam" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M310 235c-10-14 10-22 0-38"/></g>
+        <g class="steam" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M200 245c-10-14 10-22 0-38"/></g>
+        <circle cx="105" cy="118" r="30" fill="var(--fur-dark)"/><circle cx="295" cy="118" r="30" fill="var(--fur-dark)"/>
+        <circle cx="105" cy="118" r="16" id="ear1" fill="var(--face)"/><circle cx="295" cy="118" r="16" id="ear2" fill="var(--face)"/>
+        <ellipse cx="200" cy="140" rx="112" ry="104" fill="var(--fur)"/>
+        <path id="face" d="M200 70c-48 0-78 34-78 70 0 40 30 66 78 66s78-26 78-66c0-36-30-70-78-70z" fill="var(--face)"/>
+        <ellipse cx="200" cy="82" rx="62" ry="14" fill="var(--fur)"/>
+        <circle cx="165" cy="130" r="9" fill="#1c1410"/><circle cx="235" cy="130" r="9" fill="#1c1410"/>
+        <circle cx="168" cy="127" r="3" fill="#fff"/><circle cx="238" cy="127" r="3" fill="#fff"/>
+        <ellipse cx="200" cy="165" rx="26" ry="18" fill="#00000022"/>
+        <circle cx="190" cy="163" r="4" fill="#1c1410"/><circle cx="210" cy="163" r="4" fill="#1c1410"/>
+        <path id="mouth" d="M180 188q20 10 40 0" fill="none" stroke="#1c1410" stroke-width="4" stroke-linecap="round"/>
+        <path d="M0 232q50-14 100 0t100 0t100 0t100 0V320H0z" fill="var(--steam)"/>
+        <path d="M0 250q50-14 100 0t100 0t100 0t100 0V320H0z" fill="var(--steam)" opacity=".7"/>
+      </svg>
+      <div class="ctrl">
+        <label for="temp"><span data-t="air"></span><span id="tv"></span></label>
+        <input id="temp" type="range" min="-15" max="25" value="-5">
+        <p id="tempNote" aria-live="polite"></p>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <h2 data-t="aboutH"></h2>
+    <p class="intro" data-t="aboutP"></p>
+    <div class="facts">
+      <div class="fact"><b data-t="f1b"></b><span data-t="f1s"></span></div>
+      <div class="fact"><b data-t="f2b"></b><span data-t="f2s"></span></div>
+      <div class="fact"><b data-t="f3b"></b><span data-t="f3s"></span></div>
+      <div class="fact"><b data-t="f4b"></b><span data-t="f4s"></span></div>
+    </div>
+  </section>
+
+  <section id="species">
+    <h2 data-t="spH"></h2>
+    <p class="intro" data-t="spP"></p>
+    <div class="filters" id="filters" role="group"></div>
+    <div class="explorer">
+      <div class="list" id="list" role="tablist" aria-orientation="vertical"></div>
+      <article class="detail" id="detail" role="tabpanel" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <h2 data-t="quizH"></h2>
+    <div class="quiz" id="quizBox"></div>
+  </section>
+
+  <footer><span data-t="foot"></span> <a href="https://www.iucnredlist.org" target="_blank" rel="noopener">iucnredlist.org</a>. <button class="linkbtn" id="cookieBtn" type="button" data-t="cookies"></button></footer>
+</div>
+
+<div id="consent" role="dialog" aria-live="polite">
+  <span data-t="cText"></span>
+  <div class="row"><button class="y" id="cYes" type="button" data-t="cYes"></button><button id="cNo" type="button" data-t="cNo"></button></div>
+</div>
+
+<script>
+const GA_ID='G-XXXXXXXXXX'; // <-- replace with your GA4 Measurement ID
+const $=id=>document.getElementById(id);
+const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+
+// ---------- Translations ----------
+const T={
+en:{brand:'Macaque Field Guide',nSp:'Species',nQuiz:'Quiz',
+ h1:'Meet the macaques.',
+ lead:'Around two dozen species of monkeys, from snowy Japanese mountains to a rock in Gibraltar. They are clever, social and surprisingly adaptable. Start by warming up this snow monkey.',
+ svg:'Cartoon Japanese macaque sitting in a hot spring',air:'Air temperature',
+ aboutH:'What is a macaque?',
+ aboutP:'Macaques are Old World monkeys in the genus <i>Macaca</i>. They live in more habitats than any primate except humans, from tropical forest and mangrove to cold mountains and city temples.',
+ f1b:'About 23 species',f1s:'Nearly all live in Asia. One, the Barbary macaque, lives in North Africa.',
+ f2b:'Cheek pouches',f2s:'They stuff food into their cheeks and eat it later, away from rivals.',
+ f3b:'Troops with rank',f3s:'Groups have social hierarchies, kept up by grooming and alliances.',
+ f4b:'Many are at risk',f4s:'Habitat loss and the pet and meat trades threaten several species.',
+ spH:'Species explorer',spP:'Filter by region, then pick a species.',filt:'Filter by region',spec:'Species',all:'All',
+ status:'Status',found:'Found in',hab:'Habitat',wt:'Weight',size:'Relative size',
+ quizH:'Test your macaque knowledge',qOf:'Question {a} of {b}',ok:'Correct. ',no:'Not quite. ',next:'Next question',see:'See my score',fin:'Finished',again:'Play again',
+ m5:'Troop leader. You got them all.',m3:'Solid grooming skills. You know your macaques.',m0:'Fresh recruit. Explore the species above and try again.',
+ foot:'Conservation statuses follow the IUCN Red List and can change. Check',cookies:'Cookie settings',
+ cText:'We use Google Analytics cookies to see which parts of this site are used. Allow them?',cYes:'Allow',cNo:'No thanks',
+ title:'Macaques – a field guide',
+ notes:[[-8,'Cold snap. Japanese macaques in Nagano endure winters below freezing, huddling together and sitting in hot springs.'],[2,'Chilly. Their thick winter coat does most of the work, and the face stays pale.'],[14,'Mild. Time to forage for buds, fruit and insects.'],[99,'Warm. (The face colour here is illustrative: real macaque faces redden with season and hormones.)']],
+ st:{lc:'Least Concern',nt:'Near Threatened',vu:'Vulnerable',en:'Endangered',cr:'Critically Endangered'}},
+pl:{brand:'Przewodnik po makakach',nSp:'Gatunki',nQuiz:'Quiz',
+ h1:'Poznaj makaki.',
+ lead:'Około dwóch tuzinów gatunków małp, od ośnieżonych gór Japonii po skałę Gibraltar. Są mądre, towarzyskie i zaskakująco elastyczne. Zacznij od ogrzania tej małpy śnieżnej.',
+ svg:'Rysunkowy makak japoński siedzący w gorącym źródle',air:'Temperatura powietrza',
+ aboutH:'Czym jest makak?',
+ aboutP:'Makaki to małpy wąskonose z rodzaju <i>Macaca</i>. Zasiedlają więcej siedlisk niż jakikolwiek inny naczelny poza człowiekiem: od lasów tropikalnych i namorzynów po zimne góry i miejskie świątynie.',
+ f1b:'Około 23 gatunków',f1s:'Prawie wszystkie żyją w Azji. Jeden, makak magot, mieszka w Afryce Północnej.',
+ f2b:'Worki policzkowe',f2s:'Chowają jedzenie w policzkach i zjadają je później, z dala od rywali.',
+ f3b:'Stada z hierarchią',f3s:'Grupy mają społeczną hierarchię, utrzymywaną przez iskanie i sojusze.',
+ f4b:'Wiele jest zagrożonych',f4s:'Utrata siedlisk oraz handel zwierzętami i mięsem zagrażają wielu gatunkom.',
+ spH:'Przeglądarka gatunków',spP:'Wybierz region, a potem gatunek.',filt:'Filtruj według regionu',spec:'Gatunki',all:'Wszystkie',
+ status:'Status',found:'Występowanie',hab:'Siedlisko',wt:'Masa',size:'Względny rozmiar',
+ quizH:'Sprawdź swoją wiedzę o makakach',qOf:'Pytanie {a} z {b}',ok:'Dobrze. ',no:'Nie do końca. ',next:'Następne pytanie',see:'Zobacz wynik',fin:'Koniec',again:'Zagraj ponownie',
+ m5:'Przywódca stada. Wszystko dobrze!',m3:'Niezłe iskanie. Znasz się na makakach.',m0:'Nowy rekrut. Przejrzyj gatunki powyżej i spróbuj jeszcze raz.',
+ foot:'Statusy ochrony pochodzą z Czerwonej Listy IUCN i mogą się zmieniać. Sprawdź',cookies:'Ustawienia ciasteczek',
+ cText:'Używamy ciasteczek Google Analytics, aby sprawdzać, które części strony są oglądane. Zgadzasz się?',cYes:'Zgadzam się',cNo:'Nie, dziękuję',
+ title:'Makaki – przewodnik',
+ notes:[[-8,'Mróz. Makaki japońskie z Nagano znoszą zimy poniżej zera, tulą się do siebie i siedzą w gorących źródłach.'],[2,'Chłodno. Gruba zimowa sierść robi większość roboty, a twarz pozostaje blada.'],[14,'Łagodnie. Czas szukać pąków, owoców i owadów.'],[99,'Ciepło. (Kolor twarzy jest tu ilustracyjny: prawdziwe makaki czerwienieją zależnie od pory roku i hormonów.)']],
+ st:{lc:'Najmniejszej troski',nt:'Bliski zagrożenia',vu:'Narażony',en:'Zagrożony',cr:'Krytycznie zagrożony'}}
+};
+const RP={'All':'Wszystkie','East Asia':'Azja Wschodnia','South Asia':'Azja Południowa','Southeast Asia':'Azja Południowo-Wschodnia','Africa & Europe':'Afryka i Europa'};
+let lang=store.get('lang')||((navigator.language||'').toLowerCase().startsWith('pl')?'pl':'en');
+const t=k=>T[lang][k];
+const L=x=>x[lang==='pl'?1:0];
+const reg=r=>lang==='pl'?RP[r]:r;
+
+// ---------- Analytics (only after consent) ----------
+let gaLoaded=false;
+function ev(n,p){if(gaLoaded&&window.gtag)gtag('event',n,p||{})}
+function loadGA(){
+  if(gaLoaded||GA_ID==='G-XXXXXXXXXX')return;
+  const s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID;document.head.appendChild(s);
+  window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};
+  gtag('js',new Date());gtag('config',GA_ID);gaLoaded=true;
+}
+const banner=$('consent');
+function setConsent(v){store.set('ga_consent',v);banner.style.display='none';if(v==='yes')loadGA()}
+$('cYes').onclick=()=>setConsent('yes');$('cNo').onclick=()=>setConsent('no');
+$('cookieBtn').onclick=()=>{banner.style.display='flex'};
+const c=store.get('ga_consent');
+if(c==='yes')loadGA();else if(!c)banner.style.display='flex';
+
+// ---------- Hero ----------
+const temp=$('temp'),tv=$('tv'),note=$('tempNote');
+const lerp=(a,b,x)=>Math.round(a+(b-a)*x);
+const hex=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const cold=hex('#e7b7ae'),warm=hex('#d4574a');
+const snow=$('snow');
+for(let i=0;i<14;i++){const e=document.createElementNS('http://www.w3.org/2000/svg','circle');e.setAttribute('cx',Math.random()*400);e.setAttribute('cy',Math.random()*210);e.setAttribute('r',1.5+Math.random()*2.5);snow.appendChild(e)}
+function update(){
+  const v=+temp.value,x=(v+15)/40;
+  const col=`rgb(${[0,1,2].map(i=>lerp(cold[i],warm[i],x)).join()})`;
+  ['face','ear1','ear2'].forEach(id=>$(id).setAttribute('fill',col));
+  $('mouth').setAttribute('d',v<-2?'M180 192q20-8 40 0':'M180 188q20 12 40 0');
+  snow.style.opacity=v<=2?1:v<8?.5:0;
+  tv.textContent=v+' °C';
+  note.textContent=t('notes').find(n=>v<=n[0])[1];
+}
+temp.addEventListener('input',update);
+let tempSent=false;temp.addEventListener('change',()=>{if(!tempSent){tempSent=true;ev('hero_slider')}});
+
+// ---------- Species ----------
+const S=[
+ {n:['Japanese macaque','Makak japoński'],l:'Macaca fuscata',r:'East Asia',s:'lc',w:'8–14 kg',h:['Forest, mountains, hot springs','Lasy, góry, gorące źródła'],a:['Japan','Japonia'],size:55,
+  f:['The most northerly non-human primate on Earth. Troops in Nagano famously bathe in volcanic hot springs during winter.','Najbardziej wysunięty na północ naczelny poza człowiekiem. Stada z Nagano słyną z zimowych kąpieli w wulkanicznych gorących źródłach.']},
+ {n:['Rhesus macaque','Makak rezus'],l:'Macaca mulatta',r:'South Asia',s:'lc',w:'5–10 kg',h:['Forest, farmland, cities','Lasy, pola uprawne, miasta'],a:['India, Nepal, China and neighbours','Indie, Nepal, Chiny i sąsiednie kraje'],size:40,
+  f:['One of the most widespread primates. The Rh blood group is named after this species, and it has been central to medical research.','Jeden z najszerzej rozpowszechnionych naczelnych. Czynnik Rh nazwano od makaka rezus, a gatunek ma duże znaczenie w badaniach medycznych.']},
+ {n:['Long-tailed macaque','Makak jawajski'],l:'Macaca fascicularis',r:'Southeast Asia',s:'en',w:'3–8 kg',h:['Mangrove, coast, riverbanks','Namorzyny, wybrzeża, brzegi rzek'],a:['Southeast Asia','Azja Południowo-Wschodnia'],size:30,
+  f:['Also called the crab-eating macaque. A strong swimmer that forages along shorelines, and it is now assessed as Endangered.','Zwany też makakiem krabożernym. Dobrze pływa i żeruje wzdłuż brzegów; obecnie jest oceniany jako zagrożony wyginięciem.']},
+ {n:['Pig-tailed macaque','Makak świniogony'],l:'Macaca nemestrina',r:'Southeast Asia',s:'vu',w:'5–14 kg',h:['Lowland rainforest','Nizinny las deszczowy'],a:['Malay Peninsula, Sumatra, Borneo','Półwysep Malajski, Sumatra, Borneo'],size:50,
+  f:['Named for its short, curled tail. Males are large and have prominent canine teeth.','Nazwa pochodzi od krótkiego, skręconego ogona. Samce są duże i mają wyraźne kły.']},
+ {n:['Barbary macaque','Makak magot'],l:'Macaca sylvanus',r:'Africa & Europe',s:'en',w:'9–16 kg',h:['Cedar forest, rocky cliffs','Lasy cedrowe, skaliste urwiska'],a:['Morocco, Algeria, Gibraltar','Maroko, Algieria, Gibraltar'],size:60,
+  f:['The only macaque found outside Asia, and it has no visible tail. Gibraltar hosts the only wild monkeys in Europe.','Jedyny makak żyjący poza Azją, bez widocznego ogona. Na Gibraltarze żyją jedyne dzikie małpy w Europie.']},
+ {n:['Lion-tailed macaque','Makak wanderu'],l:'Macaca silenus',r:'South Asia',s:'en',w:'3–10 kg',h:['Rainforest canopy','Korony lasu deszczowego'],a:['Western Ghats, India','Ghaty Zachodnie, Indie'],size:35,
+  f:['Recognised by its dark body and silver-white mane. It depends on large tracts of rainforest, which are shrinking.','Rozpoznasz go po ciemnym futrze i srebrnobiałej grzywie. Zależy od dużych obszarów lasu deszczowego, które się kurczą.']},
+ {n:['Crested black macaque','Makak czubaty'],l:'Macaca nigra',r:'Southeast Asia',s:'cr',w:'5–10 kg',h:['Tropical forest','Las tropikalny'],a:['Sulawesi, Indonesia','Celebes, Indonezja'],size:38,
+  f:['Sports a tall crest of hair and is critically endangered. A 2011 “monkey selfie” made one individual internet-famous.','Ma wysoki czub z włosów i jest krytycznie zagrożony. „Małpie selfie” z 2011 roku uczyniło jednego osobnika sławnym w internecie.']},
+ {n:['Tibetan macaque','Makak tybetański'],l:'Macaca thibetana',r:'East Asia',s:'nt',w:'9–18 kg',h:['Mountain forest','Las górski'],a:['Central and southern China','Środkowe i południowe Chiny'],size:75,
+  f:['A stocky, short-tailed macaque with shaggy fur, among the largest of the genus. Famous troops live on Mount Emei.','Krępy makak z krótkim ogonem i kudłatą sierścią, jeden z największych w rodzaju. Znane stada żyją na górze Emei.']}
+];
+const regions=['All',...new Set(S.map(s=>s.r))];
+let region='All',sel=0;
+function renderFilters(){
+  $('filters').setAttribute('aria-label',t('filt'));
+  $('filters').innerHTML=regions.map(r=>`<button class="chip" aria-pressed="${r===region}" data-r="${r}">${reg(r)}</button>`).join('');
+  $('filters').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    region=b.dataset.r;sel=S.findIndex(s=>region==='All'||s.r===region);
+    ev('region_filter',{region});renderFilters();renderList();renderDetail();
+  });
+}
+function renderList(){
+  $('list').setAttribute('aria-label',t('spec'));
+  $('list').innerHTML=S.map((s,i)=>`<button class="sp" role="tab" aria-selected="${i===sel}" data-i="${i}" ${region!=='All'&&s.r!==region?'hidden':''}>${L(s.n)}</button>`).join('');
+  $('list').querySelectorAll('button').forEach(b=>b.onclick=()=>{sel=+b.dataset.i;ev('species_view',{species:S[sel].n[0]});renderList();renderDetail()});
+}
+function renderDetail(){
+  const s=S[sel];
+  $('detail').innerHTML=`<h3>${L(s.n)}</h3><em>${s.l}</em>
+  <div class="meta">
+    <div><b>${t('status')}</b><span class="status s-${s.s}">${t('st')[s.s]}</span></div>
+    <div><b>${t('found')}</b>${L(s.a)}</div>
+    <div><b>${t('hab')}</b>${L(s.h)}</div>
+    <div><b>${t('wt')}</b>${s.w}<div class="bar" title="${t('size')}"><i style="width:0" data-w="${s.size}"></i></div></div>
+  </div><p>${L(s.f)}</p>`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{const i=$('detail').querySelector('.bar i');if(i)i.style.width=i.dataset.w+'%'}));
+}
+
+// ---------- Quiz ----------
+const Q=[
+ {q:['Which macaque lives the farthest north?','Który makak żyje najdalej na północy?'],o:[['Rhesus macaque','Makak rezus'],['Japanese macaque','Makak japoński'],['Lion-tailed macaque','Makak wanderu']],a:1,
+  e:['Japanese macaques live in snowy parts of Japan, farther north than any other non-human primate.','Makaki japońskie żyją w ośnieżonych częściach Japonii, dalej na północ niż jakikolwiek inny naczelny poza człowiekiem.']},
+ {q:['Where can you find wild macaques in Europe?','Gdzie w Europie żyją dzikie makaki?'],o:[['Gibraltar','Gibraltar'],['Sicily','Sycylia'],['Crete','Kreta']],a:0,
+  e:['Barbary macaques live on the Rock of Gibraltar, Europe’s only wild monkeys.','Makaki magoty żyją na Skale Gibraltarskiej i są jedynymi dzikimi małpami w Europie.']},
+ {q:['Which blood-group name comes from a macaque species?','Która nazwa grupy krwi pochodzi od gatunku makaka?'],o:[['ABO','ABO'],['Rh','Rh'],['Kell','Kell']],a:1,
+  e:['The Rh factor is named after the rhesus macaque.','Czynnik Rh został nazwany od makaka rezus.']},
+ {q:['Which macaque is the odd one out because it lives in Africa?','Który makak jest wyjątkiem, bo żyje w Afryce?'],o:[['Barbary macaque','Makak magot'],['Pig-tailed macaque','Makak świniogony'],['Tibetan macaque','Makak tybetański']],a:0,
+  e:['The Barbary macaque lives in Morocco and Algeria. Nearly all other macaques are Asian.','Makak magot żyje w Maroku i Algierii. Prawie wszystkie pozostałe makaki są azjatyckie.']},
+ {q:['What do macaques use their cheek pouches for?','Do czego makakom służą worki policzkowe?'],o:[['Making calls','Wydawania głosów'],['Storing food to eat later','Przechowywania jedzenia na później'],['Cooling down','Chłodzenia się']],a:1,
+  e:['They stash food in their cheeks and eat it somewhere safer.','Chowają w nich jedzenie i zjadają je w bezpieczniejszym miejscu.']}
+];
+let qi=0,score=0,finished=false;
+function showQ(){
+  finished=false;
+  const q=Q[qi],box=$('quizBox');
+  box.innerHTML=`<div class="prog">${t('qOf').replace('{a}',qi+1).replace('{b}',Q.length)}</div><h3>${L(q.q)}</h3>
+  <div class="opts">${q.o.map((o,i)=>`<button class="opt" data-i="${i}">${L(o)}</button>`).join('')}</div>
+  <p class="why" id="why" aria-live="polite"></p><div id="nx"></div>`;
+  box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i;
+    box.querySelectorAll('.opt').forEach((x,j)=>{x.disabled=true;if(j===q.a)x.classList.add('right')});
+    if(i===q.a)score++;else b.classList.add('wrong');
+    $('why').textContent=t(i===q.a?'ok':'no')+L(q.e);
+    $('nx').innerHTML=`<button class="btn" id="go">${t(qi<Q.length-1?'next':'see')}</button>`;
+    $('go').onclick=()=>{qi++;qi<Q.length?showQ():done()};
+    $('go').focus();
+  });
+}
+function done(){
+  if(!finished)ev('quiz_complete',{score});finished=true;
+  const m=score===5?t('m5'):score>=3?t('m3'):t('m0');
+  $('quizBox').innerHTML=`<div class="prog">${t('fin')}</div><h3>${score} / ${Q.length}</h3><p>${m}</p><button class="btn" id="re">${t('again')}</button>`;
+  $('re').onclick=()=>{qi=0;score=0;showQ()};
+}
+
+// ---------- Language ----------
+function applyLang(){
+  document.documentElement.lang=lang;document.title=t('title');
+  document.querySelectorAll('[data-t]').forEach(e=>e.innerHTML=t(e.dataset.t));
+  $('heroSvg').setAttribute('aria-label',t('svg'));
+  $('lang').textContent=lang==='pl'?'EN':'PL';
+  $('lang').setAttribute('aria-label',lang==='pl'?'Switch to English':'Przełącz na polski');
+  update();renderFilters();renderList();renderDetail();
+  finished?done():showQ();
+}
+$('lang').onclick=()=>{lang=lang==='pl'?'en':'pl';store.set('lang',lang);ev('language_change',{language:lang});applyLang()};
+applyLang();
+</script>
+</body>
+</html>
