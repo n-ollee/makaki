@@ -6,6 +6,12 @@
 <title>Macaques Field Guide – Species, Habitat & Map</title>
 <meta name="description" content="Explore 23 macaque species, their habitats, hot spring habits, and interact with our field guide map." />
 <meta name="google-site-verification" content="dStzuMKivBIhNQDgiTv-WIaO80AHcWvTdwpMqXc7vl4" />
+
+<!-- Open Graph / Facebook / Twitter -->
+<meta property="og:title" content="Macaques Field Guide – Species, Habitat & Map" />
+<meta property="og:description" content="Explore 23 macaque species, their habitats, hot spring habits, and interact with our field guide map." />
+<meta property="og:type" content="website" />
+
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐒</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,16 +120,16 @@ nav{flex-wrap:wrap}.brand{font-family:var(--head);font-weight:800;color:var(--in
 </head>
 <body>
 <div class="wrap">
-  <nav><a class="brand" href="#/" data-t="brand"></a><div class="right-nav"><span class="navl" id="navLinks"></span><button class="chip lang" id="lang" type="button"></button></div></nav>
+  <nav><a class="brand" href="#/" data-t="brand">Macaque Field Guide</a><div class="right-nav"><span class="navl" id="navLinks"></span><button class="chip lang" id="lang" type="button">PL</button></div></nav>
 
-  <div class="page" id="p-home">
+  <main class="page" id="p-home">
   <header class="hero">
     <div>
-      <h1 data-t="h1"></h1>
-      <p class="lead" data-t="lead"></p>
+      <h1 data-t="h1">Meet the Macaques: Complete Species Guide</h1>
+      <p class="lead" data-t="lead">Around two dozen species of monkeys, from snowy Japanese mountains to a rock in Gibraltar. They are clever, social and surprisingly adaptable. Start by warming up this snow monkey.</p>
     </div>
     <div class="stage">
-      <svg id="heroSvg" viewBox="0 0 400 320" role="img">
+      <svg id="heroSvg" viewBox="0 0 400 320" role="img" aria-label="Interactive Japanese snow macaque sitting in a hot spring">
         <rect width="400" height="320" rx="20" fill="var(--steam)" opacity=".18"/>
         <g id="snow" fill="#fff"></g>
         <g class="steam" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M90 230c-10-14 10-22 0-38"/></g>
@@ -143,29 +149,29 @@ nav{flex-wrap:wrap}.brand{font-family:var(--head);font-weight:800;color:var(--in
         <path d="M0 250q50-14 100 0t100 0t100 0t100 0V320H0z" fill="var(--steam)" opacity=".7"/>
       </svg>
       <div class="ctrl">
-        <label for="temp"><span data-t="air"></span><span id="tv"></span></label>
+        <label for="temp"><span data-t="air">Air temperature</span><span id="tv"></span></label>
         <input id="temp" type="range" min="-15" max="25" value="-5">
         <p id="tempNote" aria-live="polite"></p>
       </div>
     </div>
   </header>
 
-  <section id="explore"><h2 id="exH"></h2><div class="cards" id="cards"></div></section>
+  <section id="explore"><h2 id="exH">Explore More Topics</h2><div class="cards" id="cards"></div></section>
 
   <section id="about">
-    <h2 data-t="aboutH"></h2>
-    <p class="intro" data-t="aboutP"></p>
+    <h2 data-t="aboutH">What is a macaque?</h2>
+    <p class="intro" data-t="aboutP">Macaques are Old World monkeys in the genus <i>Macaca</i>. They live in more habitats than any primate except humans, from tropical forest and mangrove to cold mountains and city temples.</p>
     <div class="facts">
-      <div class="fact"><b data-t="f1b"></b><span data-t="f1s"></span></div>
-      <div class="fact"><b data-t="f2b"></b><span data-t="f2s"></span></div>
-      <div class="fact"><b data-t="f3b"></b><span data-t="f3s"></span></div>
-      <div class="fact"><b data-t="f4b"></b><span data-t="f4s"></span></div>
+      <div class="fact"><b data-t="f1b">About 23 species</b><span data-t="f1s">Nearly all live in Asia. One, the Barbary macaque, lives in North Africa.</span></div>
+      <div class="fact"><b data-t="f2b">Cheek pouches</b><span data-t="f2s">They stuff food into their cheeks and eat it later, away from rivals.</span></div>
+      <div class="fact"><b data-t="f3b">Troops with rank</b><span data-t="f3s">Groups have social hierarchies, kept up by grooming and alliances.</span></div>
+      <div class="fact"><b data-t="f4b">Many are at risk</b><span data-t="f4s">Habitat loss and the pet and meat trades threaten several species.</span></div>
     </div>
   </section>
 
   <section id="species">
-    <h2 data-t="spH"></h2>
-    <p class="intro" data-t="spP"></p>
+    <h2 data-t="spH">Macaque Species Explorer</h2>
+    <p class="intro" data-t="spP">Filter macaque species by region, then pick a species.</p>
     <div class="filters" id="filters" role="group"></div>
     <div class="explorer">
       <div class="list" id="list" role="tablist" aria-orientation="vertical"></div>
@@ -174,21 +180,21 @@ nav{flex-wrap:wrap}.brand{font-family:var(--head);font-weight:800;color:var(--in
   </section>
 
   <section id="quiz">
-    <h2 data-t="quizH"></h2>
+    <h2 data-t="quizH">Test your macaque knowledge</h2>
     <div class="quiz" id="quizBox"></div>
   </section>
-  </div>
+  </main>
   <div class="page" id="p-map" hidden></div>
   <div class="page" id="p-numbers" hidden></div>
   <div class="page" id="p-brains" hidden></div>
   <div class="page" id="p-time" hidden></div>
 
-  <footer><span data-t="foot"></span> <a href="https://www.iucnredlist.org" target="_blank" rel="noopener">iucnredlist.org</a>. <button class="linkbtn" id="cookieBtn" type="button" data-t="cookies"></button></footer>
+  <footer><span data-t="foot">Conservation statuses follow the IUCN Red List and can change. Check</span> <a href="https://www.iucnredlist.org" target="_blank" rel="noopener">iucnredlist.org</a>. <button class="linkbtn" id="cookieBtn" type="button" data-t="cookies">Cookie settings</button></footer>
 </div>
 
 <div id="consent" role="dialog" aria-live="polite">
-  <span data-t="cText"></span>
-  <div class="row"><button class="y" id="cYes" type="button" data-t="cYes"></button><button id="cNo" type="button" data-t="cNo"></button></div>
+  <span data-t="cText">We use Google Analytics cookies to see which parts of this site are used. Allow them?</span>
+  <div class="row"><button class="y" id="cYes" type="button" data-t="cYes">Allow</button><button id="cNo" type="button" data-t="cNo">No thanks</button></div>
 </div>
 
 <script>
@@ -214,11 +220,11 @@ en:{brand:'Macaque Field Guide',nSp:'Species',nQuiz:'Quiz',
  m5:'Troop leader. You got them all.',m3:'Solid grooming skills. You know your macaques.',m0:'Fresh recruit. Explore the species above and try again.',
  foot:'Conservation statuses follow the IUCN Red List and can change. Check',cookies:'Cookie settings',
  cText:'We use Google Analytics cookies to see which parts of this site are used. Allow them?',cYes:'Allow',cNo:'No thanks',
- title:'Macaques – a field guide',
+ title:'Macaques Field Guide – Species, Habitat & Map',
  notes:[[-8,'Cold snap. Japanese macaques in Nagano endure winters below freezing, huddling together and sitting in hot springs.'],[2,'Chilly. Their thick winter coat does most of the work, and the face stays pale.'],[14,'Mild. Time to forage for buds, fruit and insects.'],[99,'Warm. (The face colour here is illustrative: real macaque faces redden with season and hormones.)']],
  st:{lc:'Least Concern',nt:'Near Threatened',vu:'Vulnerable',en:'Endangered',cr:'Critically Endangered'}},
 pl:{brand:'Przewodnik po makakach',nSp:'Gatunki',nQuiz:'Quiz',
- h1:'Poznaj makaki.',
+ h1:'Poznaj makaki: Przewodnik po gatunkach',
  lead:'Około dwóch tuzinów gatunków małp, od ośnieżonych gór Japonii po skałę Gibraltar. Są mądre, towarzyskie i zaskakująco elastyczne. Zacznij od ogrzania tej małpy śnieżnej.',
  svg:'Rysunkowy makak japoński siedzący w gorącym źródle',air:'Temperatura powietrza',
  aboutH:'Czym jest makak?',
@@ -233,7 +239,7 @@ pl:{brand:'Przewodnik po makakach',nSp:'Gatunki',nQuiz:'Quiz',
  m5:'Przywódca stada. Wszystko dobrze!',m3:'Niezłe iskanie. Znasz się na makakach.',m0:'Nowy rekrut. Przejrzyj gatunki powyżej i spróbuj jeszcze raz.',
  foot:'Statusy ochrony pochodzą z Czerwonej Listy IUCN i mogą się zmieniać. Sprawdź',cookies:'Ustawienia ciasteczek',
  cText:'Używamy ciasteczek Google Analytics, aby sprawdzać, które części strony są oglądane. Zgadzasz się?',cYes:'Zgadzam się',cNo:'Nie, dziękuję',
- title:'Makaki – przewodnik',
+ title:'Makaki – przewodnik po gatunkach',
  notes:[[-8,'Mróz. Makaki japońskie z Nagano znoszą zimy poniżej zera, tulą się do siebie i siedzą w gorących źródłach.'],[2,'Chłodno. Gruba zimowa sierść robi większość roboty, a twarz pozostaje blada.'],[14,'Łagodnie. Czas szukać pąków, owoców i owadów.'],[99,'Ciepło. (Kolor twarzy jest tu ilustracyjny: prawdziwe makaki czerwienieją zależnie od pory roku i hormonów.)']],
  st:{lc:'Najmniejszej troski',nt:'Bliski zagrożenia',vu:'Narażony',en:'Zagrożony',cr:'Krytycznie zagrożony'}}
 };
