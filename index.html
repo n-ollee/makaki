@@ -123,12 +123,18 @@ nav{flex-wrap:wrap}.brand{font-family:var(--head);font-weight:800;color:var(--in
 .gg{display:grid;grid-template-columns:repeat(4,minmax(52px,72px));gap:8px;margin:16px 0}
 .gc{aspect-ratio:1;border-radius:12px;border:2px solid var(--line);background:var(--bg);font:800 1.5rem var(--head);color:var(--ink);cursor:pointer}
 .gc[disabled]{opacity:.35;cursor:default}.gc.hid{background:var(--ink);color:var(--ink)}.gc.ok{border-color:#4d7a5c}
+/* Newsletter box */
+.nl-box{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:28px;max-width:720px;margin-top:20px}
+.nl-form{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.nl-form input[type="email"]{flex:1;min-width:220px;font:500 1rem var(--body);padding:11px 16px;border-radius:99px;border:2px solid var(--line);background:var(--bg);color:var(--ink)}
+.nl-form input[type="email"]:focus{outline:none;border-color:var(--accent)}
+.nl-form .btn{margin-top:0}
+.nl-note{font-size:.88rem;color:var(--muted);margin:10px 0 0}
 </style>
 </head>
 <body>
 <div class="wrap">
   <nav><a class="brand" href="#/" data-t="brand">Macaque Field Guide</a><div class="right-nav"><span class="navl" id="navLinks"></span><button class="chip lang" id="lang" type="button">PL</button></div></nav>
-
   <main class="page" id="p-home">
   <header class="hero">
     <div>
@@ -190,6 +196,18 @@ nav{flex-wrap:wrap}.brand{font-family:var(--head);font-weight:800;color:var(--in
     <h2 data-t="quizH">Test your macaque knowledge</h2>
     <div class="quiz" id="quizBox"></div>
   </section>
+    <section id="newsletter">
+    <h2 data-t="nlH">Macaque Dispatch</h2>
+    <p class="intro" data-t="nlP">Get one short email a month with new species profiles, field notes, and macaque curiosities.</p>
+    <div class="nl-box">
+      <form class="nl-form" action="https://buttondown.com/api/emails/embed-subscribe/makaki" method="post" target="popupwindow" onsubmit="ev('newsletter_signup')">
+        <input type="email" name="email" id="nlEmail" required placeholder="you@example.com" aria-label="Email address" />
+        <input type="hidden" value="1" name="embed" />
+        <button class="btn" type="submit" data-t="nlBtn">Subscribe</button>
+      </form>
+      <p class="nl-note" data-t="nlNote">No spam. Unsubscribe with one click anytime.</p>
+    </div>
+  </section>
   </main>
   <div class="page" id="p-map" hidden></div>
   <div class="page" id="p-numbers" hidden></div>
@@ -201,7 +219,7 @@ nav{flex-wrap:wrap}.brand{font-family:var(--head);font-weight:800;color:var(--in
 
 <div id="consent" role="dialog" aria-live="polite">
   <span data-t="cText">We use Google Analytics cookies to see which parts of this site are used. Allow them?</span>
-  <div class="row"><button class="y" id="cYes" type="button" data-t="cYes">Allow</button><button id="cNo" type="button" data-t="cNo">No thanks</button></div>
+  <div class="row"><button class="y" id="cYes" type="button" data-t="cYes">Allow</button><button id="cNo" type="button" data-t="cNo">No thanks </button></div>
 </div>
 
 <script>
@@ -227,6 +245,11 @@ en:{brand:'Macaque Field Guide',nSp:'Species',nQuiz:'Quiz',
  m5:'Troop leader. You got them all.',m3:'Solid grooming skills. You know your macaques.',m0:'Fresh recruit. Explore the species above and try again.',
  foot:'Conservation statuses follow the IUCN Red List and can change. Check',cookies:'Cookie settings',
  cText:'We use Google Analytics cookies to see which parts of this site are used. Allow them?',cYes:'Allow',cNo:'No thanks',
+ nlH:'Macaque Dispatch',
+ nlP:'Get one short email a month with new species profiles, field notes, and macaque curiosities.',
+ nlBtn:'Subscribe',
+ nlNote:'No spam. Unsubscribe with one click anytime.',
+ title:'Macaques Field Guide – Species, Habitat & Map',
  title:'Macaques Field Guide – Species, Habitat & Map',
  notes:[[-8,'Cold snap. Japanese macaques in Nagano endure winters below freezing, huddling together and sitting in hot springs.'],[2,'Chilly. Their thick winter coat does most of the work, and the face stays pale.'],[14,'Mild. Time to forage for buds, fruit and insects.'],[99,'Warm. (The face colour here is illustrative: real macaque faces redden with season and hormones.)']],
  st:{lc:'Least Concern',nt:'Near Threatened',vu:'Vulnerable',en:'Endangered',cr:'Critically Endangered'}},
@@ -245,7 +268,10 @@ pl:{brand:'Przewodnik po makakach',nSp:'Gatunki',nQuiz:'Quiz',
  quizH:'Sprawdź swoją wiedzę o makakach',qOf:'Pytanie {a} z {b}',ok:'Dobrze. ',no:'Nie do końca. ',next:'Następne pytanie',see:'Zobacz wynik',fin:'Koniec',again:'Zagraj ponownie',
  m5:'Przywódca stada. Wszystko dobrze!',m3:'Niezłe iskanie. Znasz się na makakach.',m0:'Nowy rekrut. Przejrzyj gatunki powyżej i spróbuj jeszcze raz.',
  foot:'Statusy ochrony pochodzą z Czerwonej Listy IUCN i mogą się zmieniać. Sprawdź',cookies:'Ustawienia ciasteczek',
- cText:'Używamy ciasteczek Google Analytics, aby sprawdzać, które części strony są oglądane. Zgadzasz się?',cYes:'Zgadzam się',cNo:'Nie, dziękuję',
+ cText:'Używamy ciasteczek Google Analytics, aby sprawdzać, które części strony są oglądane. Zgadzasz się?',cYes:'Zgadzam się',cNo:'Nie, dziękuję',nlH:'Biuletyn o makakach',
+ nlP:'Otrzymuj jedną krótką wiadomość w miesiącu z nowymi gatunkami, ciekawostkami ze świata i aktualizacjami przewodnika.',
+ nlBtn:'Zapisz się',
+ nlNote:'Zero spamu. Wypiszesz się jednym kliknięciem w dowolnej chwili.',
  title:'Makaki – przewodnik po gatunkach',
  notes:[[-8,'Mróz. Makaki japońskie z Nagano znoszą zimy poniżej zera, tulą się do siebie i siedzą w gorących źródłach.'],[2,'Chłodno. Gruba zimowa sierść robi większość roboty, a twarz pozostaje blada.'],[14,'Łagodnie. Czas szukać pąków, owoców i owadów.'],[99,'Ciepło. (Kolor twarzy jest tu ilustracyjny: prawdziwe makaki czerwienieją zależnie od pory roku i hormonów.)']],
  st:{lc:'Najmniejszej troski',nt:'Bliski zagrożenia',vu:'Narażony',en:'Zagrożony',cr:'Krytycznie zagrożony'}}
